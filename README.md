@@ -1,3 +1,15 @@
-# Personal-Dashboard
-# 🌤💰 Your daily personal dashboard – weather, Bitcoin prices, and more, all in one clean interface.
-This is a simple and user-friendly personal dashboard designed for everyday use. It is primarily built with JavaScript, HTML, and CSS, and integrates APIs to provide real-time weather updates and Bitcoin price information.
+# Personal Dashboard
+
+A clean, minimalist dashboard designed for your daily needs. It brings together real-time weather updates and Bitcoin price tracking into one simple interface.
+
+## 🚀 Features
+
+- **Real-Time Weather**: Automatically fetches and displays current weather conditions.
+- **Bitcoin Tracker**: Keeps you updated with the latest Bitcoin prices.
+- **Clean Interface**: specific focus on usability and minimalism, making it easy to check your daily stats at a glance.
+
+## 🛠️ Tech Stack
+
+- **HTML5**: For the structural layout.
+- **CSS3**: For styling and responsive design.
+- **JavaScript**: handles API calls and dynamic DOM updates.
