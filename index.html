@@ -3,24 +3,298 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Dashboard</title>
+    <title>Dinacharya</title>
     <link rel="icon" type="image/x-icon" href="./images/icon.png">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <main>    
-        <div class="top">
-            <div class="crypto-value">Crypto</div>
-            <div class="weather">
-                <p>Weather</p>
-            </div>
-        </div>
-        
-        <h1 class="time">TIME HERE</h1>
-        
-        <p class="author"></p>
-    </main>
-</body>
-<script src="index.js"></script>
+    <div class="app-shell">
+        <header class="dashboard-header">
+            <h1 class="dashboard-title">Dinacharya</h1>
+            <button
+                type="button"
+                class="btn-settings"
+                id="open-settings"
+                aria-haspopup="dialog"
+                aria-controls="settings-modal"
+                aria-label="Open dashboard settings"
+            >
+                Settings
+            </button>
+        </header>
 
+        <section class="dashboard-hero" aria-label="Clock">
+            <p class="time" aria-live="polite">—</p>
+            <p class="author" id="photo-author"></p>
+        </section>
+
+        <div class="dashboard-grid" role="list">
+            <article
+                class="widget-card"
+                data-widget-id="weather"
+                role="listitem"
+                aria-labelledby="weather-heading"
+            >
+                <h2 id="weather-heading">Weather</h2>
+                <div class="widget-body weather-widget-body" aria-busy="true">
+                    <p class="muted">Loading weather…</p>
+                </div>
+            </article>
+
+            <article
+                class="widget-card"
+                data-widget-id="bitcoin"
+                role="listitem"
+                aria-labelledby="bitcoin-heading"
+            >
+                <h2 id="bitcoin-heading">Bitcoin</h2>
+                <div class="widget-body crypto-widget-body" aria-busy="true">
+                    <p class="muted">Loading market data…</p>
+                </div>
+            </article>
+
+            <article
+                class="widget-card"
+                data-widget-id="daily-focus"
+                role="listitem"
+                aria-labelledby="daily-focus-heading"
+            >
+                <h2 id="daily-focus-heading">Daily Focus</h2>
+                <div class="widget-body daily-focus-widget">
+                    <label class="visually-hidden" for="daily-focus-input">
+                        What are your top priorities today?
+                    </label>
+                    <input
+                        type="text"
+                        id="daily-focus-input"
+                        class="daily-focus-input"
+                        placeholder="What are your top priorities today?"
+                        autocomplete="off"
+                        maxlength="200"
+                    />
+                    <p
+                        class="daily-focus-empty"
+                        id="daily-focus-empty"
+                        aria-live="polite"
+                    >
+                        No focus set. Take a breath.
+                    </p>
+                    <ul
+                        class="daily-focus-list"
+                        id="daily-focus-list"
+                        aria-label="Today's focus items"
+                    ></ul>
+                </div>
+            </article>
+
+            <article
+                class="widget-card"
+                data-widget-id="quick-links"
+                role="listitem"
+                aria-labelledby="quick-links-heading"
+            >
+                <div class="quick-links-card-head">
+                    <h2 id="quick-links-heading">Quick Links</h2>
+                    <button
+                        type="button"
+                        class="quick-links-edit-btn"
+                        id="quick-links-edit"
+                        aria-pressed="false"
+                        aria-label="Edit quick links"
+                    >
+                        Edit
+                    </button>
+                </div>
+                <div class="widget-body quick-links-widget" id="quick-links-widget">
+                    <div
+                        class="quick-links-grid"
+                        id="quick-links-grid"
+                        role="list"
+                    ></div>
+                    <button
+                        type="button"
+                        class="quick-links-add-fab"
+                        id="quick-links-add-fab"
+                        aria-label="Add quick link"
+                    >
+                        +
+                    </button>
+                </div>
+            </article>
+
+            <article
+                class="widget-card"
+                data-widget-id="focus-timer"
+                role="listitem"
+                aria-labelledby="focus-timer-heading"
+            >
+                <h2 id="focus-timer-heading">Focus Timer</h2>
+                <div class="widget-body focus-timer-widget">
+                    <div
+                        class="focus-timer-ring-wrap"
+                        id="focus-timer-control"
+                        role="button"
+                        tabindex="0"
+                        aria-label="Focus timer"
+                    >
+                        <svg
+                            class="focus-timer-svg"
+                            viewBox="0 0 120 120"
+                            aria-hidden="true"
+                        >
+                            <circle
+                                class="focus-timer-track"
+                                cx="60"
+                                cy="60"
+                                r="54"
+                                fill="none"
+                                stroke="#333"
+                                stroke-width="8"
+                            />
+                            <circle
+                                id="focus-timer-progress"
+                                class="focus-timer-progress"
+                                cx="60"
+                                cy="60"
+                                r="54"
+                                fill="none"
+                                stroke-width="8"
+                                stroke-linecap="round"
+                                transform="rotate(-90 60 60)"
+                            />
+                        </svg>
+                        <div class="focus-timer-center">
+                            <div
+                                class="focus-timer-clock"
+                                id="focus-timer-clock"
+                                role="group"
+                                aria-live="polite"
+                                aria-label="Focus duration"
+                            >
+                                <span class="focus-timer-mins-wrap">
+                                    <span
+                                        class="focus-timer-mins"
+                                        id="focus-timer-mins"
+                                        contenteditable="true"
+                                        spellcheck="false"
+                                        inputmode="numeric"
+                                        aria-label="Minutes"
+                                    >25</span>
+                                </span><span class="focus-timer-sep" aria-hidden="true">:</span><span
+                                    class="focus-timer-secs"
+                                    id="focus-timer-secs"
+                                    aria-hidden="true"
+                                >00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="focus-timer-presets"
+                        id="focus-timer-presets"
+                        role="group"
+                        aria-label="Quick duration presets"
+                    >
+                        <button type="button" class="focus-timer-pill" data-minutes="15">
+                            15m
+                        </button>
+                        <button type="button" class="focus-timer-pill" data-minutes="25">
+                            25m
+                        </button>
+                        <button type="button" class="focus-timer-pill" data-minutes="50">
+                            50m
+                        </button>
+                    </div>
+                    <p class="focus-timer-hint muted">
+                        Click ring to start or pause · Double-click ring to reset · Scroll time to adjust minutes
+                    </p>
+                </div>
+            </article>
+        </div>
+    </div>
+
+    <div
+        class="modal-backdrop quick-links-modal-backdrop"
+        id="quick-links-add-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-hidden="true"
+        aria-labelledby="quick-links-add-title"
+    >
+        <div class="modal-panel quick-links-modal-panel" role="document">
+            <div class="modal-header">
+                <h2 id="quick-links-add-title">Add link</h2>
+                <button
+                    type="button"
+                    class="btn-close"
+                    id="quick-links-add-close"
+                    aria-label="Close"
+                >
+                    ×
+                </button>
+            </div>
+            <form id="quick-links-add-form" class="quick-links-add-form">
+                <label class="quick-links-field-label" for="quick-links-url-input"
+                    >URL</label
+                >
+                <input
+                    type="text"
+                    id="quick-links-url-input"
+                    class="quick-links-field-input"
+                    name="url"
+                    placeholder="https://example.com"
+                    autocomplete="url"
+                    required
+                />
+                <label class="quick-links-field-label" for="quick-links-title-input"
+                    >Title</label
+                >
+                <input
+                    type="text"
+                    id="quick-links-title-input"
+                    class="quick-links-field-input"
+                    name="title"
+                    placeholder="Label shown under icon"
+                    autocomplete="off"
+                    maxlength="120"
+                />
+                <div class="quick-links-form-actions">
+                    <button type="button" class="quick-links-btn-secondary" id="quick-links-add-cancel">
+                        Cancel
+                    </button>
+                    <button type="submit" class="quick-links-btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div
+        class="modal-backdrop"
+        id="settings-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-hidden="true"
+        aria-labelledby="settings-title"
+    >
+        <div class="modal-panel" role="document">
+            <div class="modal-header">
+                <h2 id="settings-title">Widget visibility</h2>
+                <button
+                    type="button"
+                    class="btn-close"
+                    id="close-settings"
+                    aria-label="Close settings"
+                >
+                    ×
+                </button>
+            </div>
+            <p class="modal-hint">
+                Turn widgets on or off. Your choices are saved in the browser
+                (<code>localStorage</code>) and apply immediately.
+            </p>
+            <div class="settings-form" id="settings-form"></div>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
 </html>
